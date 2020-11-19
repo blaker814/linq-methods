@@ -48,17 +48,44 @@ namespace linq
 
 
             // Build a collection of these numbers sorted in ascending order
-            List<int> numbers = new List<int>()
+            // List<int> numbers = new List<int>()
+            // {
+            //     15, 8, 21, 24, 32, 13, 30, 12, 7, 54, 48, 4, 49, 96
+            // };
+            // IEnumerable<int> ascend = from num in numbers
+            //                           orderby num ascending
+            //                           select num;
+            // foreach (int num in ascend)
+            // {
+            //     Console.WriteLine(num);
+            // }
+
+
+            // Output how many numbers are in this list
+            // List<int> numbers = new List<int>()
+            // {
+            //     15, 8, 21, 24, 32, 13, 30, 12, 7, 54, 48, 4, 49, 96
+            // };
+            // int numOfNums = numbers.Count;
+            // Console.WriteLine(numOfNums);
+
+
+            // How much money have we made?
+            // List<double> purchases = new List<double>()
+            // {
+            //     2340.29, 745.31, 21.76, 34.03, 4786.45, 879.45, 9442.85, 2454.63, 45.65
+            // };
+            // double sum = purchases.Sum();
+            // Console.WriteLine(sum);
+
+
+            // What is our most expensive product?
+            List<double> prices = new List<double>()
             {
-                15, 8, 21, 24, 32, 13, 30, 12, 7, 54, 48, 4, 49, 96
+                879.45, 9442.85, 2454.63, 45.65, 2340.29, 34.03, 4786.45, 745.31, 21.76
             };
-            IEnumerable<int> ascend = from num in numbers
-                                      orderby num ascending
-                                      select num;
-            foreach (int num in ascend)
-            {
-                Console.WriteLine(num);
-            }
+            double priciest = prices.Max();
+            Console.WriteLine(priciest);
         }
     }
 }
