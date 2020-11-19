@@ -137,6 +137,37 @@ namespace linq
                 FTB 1
                 CITI 1
             */
+            // List<Customer> customers = new List<Customer>() {
+            //     new Customer(){ Name="Bob Lesman", Balance=80345.66, Bank="FTB"},
+            //     new Customer(){ Name="Joe Landy", Balance=9284756.21, Bank="WF"},
+            //     new Customer(){ Name="Meg Ford", Balance=487233.01, Bank="BOA"},
+            //     new Customer(){ Name="Peg Vale", Balance=7001449.92, Bank="BOA"},
+            //     new Customer(){ Name="Mike Johnson", Balance=790872.12, Bank="WF"},
+            //     new Customer(){ Name="Les Paul", Balance=8374892.54, Bank="WF"},
+            //     new Customer(){ Name="Sid Crosby", Balance=957436.39, Bank="FTB"},
+            //     new Customer(){ Name="Sarah Ng", Balance=56562389.85, Bank="FTB"},
+            //     new Customer(){ Name="Tina Fey", Balance=1000000.00, Bank="CITI"},
+            //     new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
+            // };
+            // IEnumerable<Bank> millionairesBanks = from customer in customers
+            //                                       where customer.Balance >= 1000000
+            //                                       group customer by customer.Bank into memberBanks
+            //                                       select new Bank { Name = memberBanks.Key, TotalMembers = memberBanks.Count() };
+            // foreach (Bank bank in millionairesBanks)
+            // {
+            //     Console.WriteLine($"{bank.Name} {bank.TotalMembers}");
+            // }
+
+
+            // Create some banks and store in a List
+            List<Bank> banks = new List<Bank>() {
+                new Bank(){ Name="First Tennessee", Symbol="FTB"},
+                new Bank(){ Name="Wells Fargo", Symbol="WF"},
+                new Bank(){ Name="Bank of America", Symbol="BOA"},
+                new Bank(){ Name="Citibank", Symbol="CITI"},
+            };
+
+            // Create some customers and store in a List
             List<Customer> customers = new List<Customer>() {
                 new Customer(){ Name="Bob Lesman", Balance=80345.66, Bank="FTB"},
                 new Customer(){ Name="Joe Landy", Balance=9284756.21, Bank="WF"},
@@ -149,14 +180,43 @@ namespace linq
                 new Customer(){ Name="Tina Fey", Balance=1000000.00, Bank="CITI"},
                 new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
             };
-            IEnumerable<Bank> millionairesBanks = from customer in customers
-                                                  where customer.Balance >= 1000000
-                                                  group customer by customer.Bank into memberBanks
-                                                  select new Bank { Name = memberBanks.Key, TotalMembers = memberBanks.Count() };
-            foreach (Bank bank in millionairesBanks)
+            List<Customer> millionaires = customers.Where(customer => customer.Balance >= 1000000).OrderBy(customer => customer.Name.Split(" ")[1]).ToList();
+            List<ReportItem> millionaireReport = millionaires.Join(banks, millionaire => millionaire.Bank, bank => bank.Symbol, (millionaire, bank) => new ReportItem { CustomerName = millionaire.Name, BankName = bank.Name }).ToList();
+            foreach (var item in millionaireReport)
             {
-                Console.WriteLine($"{bank.Name} {bank.TotalMembers}");
+                Console.WriteLine($"{item.CustomerName} at {item.BankName}");
             }
+        }
+        // public class Customer
+        // {
+        //     public string Name { get; set; }
+        //     public double Balance { get; set; }
+        //     public string Bank { get; set; }
+        // }
+        // public class Bank
+        // {
+        //     public string Name { get; set; }
+        //     public int TotalMembers { get; set; }
+        // }
+
+
+        /*
+            TASK:
+            As in the previous exercise, you're going to output the millionaires,
+            but you will also display the full name of the bank. You also need
+            to sort the millionaires' names, ascending by their LAST name.
+
+            Example output:
+                Tina Fey at Citibank
+                Joe Landy at Wells Fargo
+                Sarah Ng at First Tennessee
+                Les Paul at Wells Fargo
+                Peg Vale at Bank of America
+        */
+        public class Bank
+        {
+            public string Symbol { get; set; }
+            public string Name { get; set; }
         }
         public class Customer
         {
@@ -164,11 +224,10 @@ namespace linq
             public double Balance { get; set; }
             public string Bank { get; set; }
         }
-        public class Bank
+        public class ReportItem
         {
-            public string Name { get; set; }
-            public int TotalMembers { get; set; }
+            public string CustomerName { get; set; }
+            public string BankName { get; set; }
         }
-
     }
 }
