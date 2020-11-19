@@ -80,12 +80,31 @@ namespace linq
 
 
             // What is our most expensive product?
-            List<double> prices = new List<double>()
+            // List<double> prices = new List<double>()
+            // {
+            //     879.45, 9442.85, 2454.63, 45.65, 2340.29, 34.03, 4786.45, 745.31, 21.76
+            // };
+            // double priciest = prices.Max();
+            // Console.WriteLine(priciest);
+
+
+            /*
+                Store each number in the following List until a perfect square
+                is detected.
+
+                Expected output is { 66, 12, 8, 27, 82, 34, 7, 50, 19, 46 } 
+
+                Ref: https://msdn.microsoft.com/en-us/library/system.math.sqrt(v=vs.110).aspx
+            */
+            List<int> wheresSquaredo = new List<int>()
             {
-                879.45, 9442.85, 2454.63, 45.65, 2340.29, 34.03, 4786.45, 745.31, 21.76
+                66, 12, 8, 27, 82, 34, 7, 50, 19, 46, 81, 23, 30, 4, 68, 14
             };
-            double priciest = prices.Max();
-            Console.WriteLine(priciest);
+            List<int> untilSquare = wheresSquaredo.TakeWhile(num => !(Math.Sqrt(num) % 1 == 0)).ToList();
+            foreach (int num in untilSquare)
+            {
+                Console.WriteLine(num);
+            }
         }
     }
 }
